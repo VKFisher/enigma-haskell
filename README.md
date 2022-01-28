@@ -6,6 +6,8 @@ Written mainly to try out the [freer-simple](https://hackage.haskell.org/package
 
 ## Process overview
 
+![Process overview](docs/process-overview.drawio.svg)
+
 1. A button is pressed
 
 2. The machine steps (rotates) the rotors
@@ -31,11 +33,3 @@ Written mainly to try out the [freer-simple](https://hackage.haskell.org/package
 
 4. A lightbulb signifying the output character lights up
    - the output character is always different for the input character
-
-![Process overview](docs/process-overview.drawio.svg)
-
-## Components
-
-### Plugboard
-
-![Plugboard](docs/plugboard.drawio.svg)
