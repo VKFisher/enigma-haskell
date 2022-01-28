@@ -50,7 +50,7 @@ encryptCharacter char = do
       & applyRotorBackward rotor1
       & applyPlugboard plugboard
 
-stepRotors :: Member (ST.State Enigma) effs => Eff effs ()
+stepRotors :: Member EnigmaState effs => Eff effs ()
 stepRotors = do
   r1InTurnover <- inTurnoverPosition <$> ST.gets rotor1
   r2InTurnover <- inTurnoverPosition <$> ST.gets rotor2
