@@ -81,8 +81,10 @@ library
     , fmt
     , freer-simple
     , hspec
+    , nonempty-containers
     , relude
     , text
+    , these
   default-language: Haskell2010
 
 executable enigma
@@ -133,8 +135,10 @@ executable enigma
     , fmt
     , freer-simple
     , hspec
+    , nonempty-containers
     , relude
     , text
+    , these
   default-language: Haskell2010
 
 executable experiment
@@ -185,8 +189,10 @@ executable experiment
     , fmt
     , freer-simple
     , hspec
+    , nonempty-containers
     , relude
     , text
+    , these
   default-language: Haskell2010
 
 test-suite enigma-test
@@ -238,6 +244,8 @@ test-suite enigma-test
     , fmt
     , freer-simple
     , hspec
+    , nonempty-containers
     , relude
     , text
+    , these
   default-language: Haskell2010

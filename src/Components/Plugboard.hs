@@ -1,12 +1,12 @@
 module Components.Plugboard (Plugboard, plugboard, applyPlugboard) where
 
+import Characters (EnigmaChar)
 import qualified Characters
 import Control.Monad.Freer
 import qualified Data.Map.Strict as Map
-import Error ( EnigmaError, throwError )
+import Error (EnigmaError, throwError)
 import Fmt ((+|), (|+))
 import Relude.Extra (traverseBoth)
-import Characters (EnigmaChar)
 
 newtype Plugboard = Plugboard (Map EnigmaChar EnigmaChar)
   deriving (Show, Eq)
