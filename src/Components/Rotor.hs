@@ -18,18 +18,20 @@ import Error (EnigmaError)
 import Relude.Extra (bimapBoth)
 
 data RotorWire = RotorWireForward Int | RotorWireBackward Int
-  deriving (Eq, Ord)
+  deriving (Eq, Ord, Show)
 
 data RotorType
   = RotorType
       (Map RotorWire Int) -- wiring map
       (NESet Int) -- turnover positions (at least one)
+  deriving (Eq, Show)
 
 data Rotor = Rotor
   { rotorType :: RotorType,
     ringSetting :: Int,
     position :: Int
   }
+  deriving (Eq, Show)
 
 indexedAlphabetCharset :: [(Int, EnigmaChar)]
 indexedAlphabetCharset = zip [0 .. length alphabetCharset] alphabetCharset

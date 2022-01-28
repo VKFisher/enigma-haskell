@@ -34,6 +34,7 @@ library
       Components.Reflector_test
       Components.Rotor
       Enigma
+      Enigma_test
       Error
       Prelude
   other-modules:
