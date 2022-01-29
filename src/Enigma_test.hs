@@ -5,14 +5,14 @@ import qualified Components.Plugboard as PB
 import Components.Rotor (Rotor)
 import Control.Monad.Freer (Eff, Member)
 import qualified Control.Monad.Freer.State as ST
-import Enigma (Enigma (..), decrypt, runEnigma)
+import Enigma (Enigma (..), decrypt, runEnigma, substituteConventions)
 import Error (EnigmaError)
 import Test.Hspec
 
 spec :: Spec
 spec = describe "Enigma" $ do
   describe "enigma" $ do
-    it "decrypts a historic message" $ do
+    it "decrypts historic message #1" $ do
       let input :: Text
           input =
             "EDPUD NRGYS ZRCXN UYTPO MRMBO FKTBZ REZKM LXLVE FGUEY SIOZV EQMIK UBPMM YLKLT TDEIS MDICA "
@@ -20,8 +20,8 @@ spec = describe "Enigma" $ do
               <> "TLPIF SVKDA SCTAC DPBOP VHJK"
       let expectedResult :: Text
           expectedResult =
-            "AUFKLXABTEILUNGXVONXKURTINOWAXKURTINOWAXNORDWESTLXSEBEZXSEBEZXUAFFLIEGERSTRASZERIQTUNGX"
-              <> "DUBROWKIXDUBROWKIXOPOTSCHKAXOPOTSCHKAXUMXEINSAQTDREINULLXUHRANGETRETENXANGRIFFXINFXRGTX"
+            "AUFKL ABTEILUNG VON KURTINOWA KURTINOWA NORDWESTL SEBEZ SEBEZ UAFFLIEGERSTRASZERICHTUNG DUBROWKI "
+              <> "DUBROWKI OPOTSCHKA OPOTSCHKA UM EINSACHTDREINULL UHRANGETRETEN ANGRIFF INF RGT "
       let testDecrypt :: Member EnigmaError effs => Eff effs Text
           testDecrypt = do
             pb <-
@@ -50,7 +50,78 @@ spec = describe "Enigma" $ do
                     }
             ST.evalState initialEnigmaState $ decrypt input
 
-      runEnigma testDecrypt `shouldBe` Right expectedResult
+      let res = substituteConventions <$> runEnigma testDecrypt
+      res `shouldBe` Right expectedResult
+    it "decrypts historic message #2" $ do
+      let input :: Text
+          input =
+            "GCDSE AHUGW TQGRK VLFGX UCALX VYMIG MMNMF DXTGN VHVRM MEVOU YFZSL RHDRR XFJWC "
+              <> "FHUHM UNZEF RDISI KBGPM YVXUZ"
+      let expectedResult :: Text
+          expectedResult =
+            "FEINDLICHEINFANTERIEKOLONNEBEOBACHTET ANFANGSUEDAUSGANGBAERWALDE ENDEDREIKMOSTWAERTSNEUSTADT"
+      let testDecrypt :: Member EnigmaError effs => Eff effs Text
+          testDecrypt = do
+            pb <-
+              PB.plugboard
+                [ ('A', 'M'),
+                  ('F', 'I'),
+                  ('N', 'V'),
+                  ('P', 'S'),
+                  ('T', 'U'),
+                  ('W', 'Z')
+                ]
+            r1 <- historicRotorIII 'V' 'L'
+            r2 <- historicRotorI 'M' 'B'
+            r3 <- historicRotorII 'X' 'A'
+            let initialEnigmaState =
+                  Enigma
+                    { plugboard = pb,
+                      rotor1 = r1,
+                      rotor2 = r2,
+                      rotor3 = r3,
+                      reflector = historicReflectorA
+                    }
+            ST.evalState initialEnigmaState $ decrypt input
+      let res = substituteConventions <$> runEnigma testDecrypt
+      res `shouldBe` Right expectedResult
+    it "decrypts historic message #3" $ do
+      let input :: Text
+          input =
+            "YKAE NZAP MSCH ZBFO CUVM RMDP YCOF HADZ IZME FXTH FLOL PZLF GGBO TGOX GRET DWTJ IQHL MXVJ WKZU ASTR"
+      let expectedResult :: Text
+          expectedResult =
+            "STEUERE? TANAF? ORD? ANSTANDORTCHUAAACCCVIERNEUNNEUNZWOFAHRTZWONULSM  SCHARNHORSTHCO"
+      let testDecrypt :: Member EnigmaError effs => Eff effs Text
+          testDecrypt = do
+            pb <-
+              PB.plugboard
+                [ ('A', 'N'),
+                  ('E', 'Z'),
+                  ('H', 'K'),
+                  ('I', 'J'),
+                  ('L', 'R'),
+                  ('M', 'Q'),
+                  ('O', 'T'),
+                  ('P', 'V'),
+                  ('S', 'W'),
+                  ('U', 'X')
+                ]
+            r1 <- historicRotorVIII 'M' 'V'
+            r2 <- historicRotorVI 'H' 'Z'
+            r3 <- historicRotorIII 'A' 'U'
+            let initialEnigmaState =
+                  Enigma
+                    { plugboard = pb,
+                      rotor1 = r1,
+                      rotor2 = r2,
+                      rotor3 = r3,
+                      reflector = historicReflectorB
+                    }
+            ST.evalState initialEnigmaState $ decrypt input
+
+      let res = substituteConventions <$> runEnigma testDecrypt
+      res `shouldBe` Right expectedResult
     it "correctly handles a double step situation" $ do
       let input :: Text
           input = "AAAAAA"
