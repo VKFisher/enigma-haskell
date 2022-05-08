@@ -26,15 +26,11 @@ source-repository head
 library
   exposed-modules:
       Characters
-      Characters_test
       Components.Historic
       Components.Plugboard
-      Components.Plugboard_test
       Components.Reflector
-      Components.Reflector_test
       Components.Rotor
       Enigma
-      Enigma_test
       Error
       Prelude
   other-modules:
@@ -77,12 +73,16 @@ library
       TypeOperators
   ghc-options: -j8 +RTS -A32m -RTS -O2 -haddock -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints
   build-depends:
-      base-noprelude
+      QuickCheck
+    , base-noprelude
     , containers
     , fmt
     , freer-simple
+    , generic-random
     , hspec
     , nonempty-containers
+    , quickcheck-classes
+    , quickcheck-instances
     , relude
     , text
     , these
@@ -130,13 +130,17 @@ executable enigma
       TypeOperators
   ghc-options: -j8 +RTS -A32m -RTS -O2 -haddock -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      base-noprelude
+      QuickCheck
+    , base-noprelude
     , containers
     , enigma
     , fmt
     , freer-simple
+    , generic-random
     , hspec
     , nonempty-containers
+    , quickcheck-classes
+    , quickcheck-instances
     , relude
     , text
     , these
@@ -146,6 +150,10 @@ test-suite enigma-test
   type: exitcode-stdio-1.0
   main-is: Main.hs
   other-modules:
+      Characters_test
+      Components.Plugboard_test
+      Components.Reflector_test
+      Enigma_test
       Paths_enigma
   hs-source-dirs:
       test
@@ -183,15 +191,19 @@ test-suite enigma-test
       TypeFamilies
       TypeFamilyDependencies
       TypeOperators
-  ghc-options: -j8 +RTS -A32m -RTS -O2 -haddock -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  ghc-options: -j8 +RTS -A32m -RTS -O2 -haddock -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N -Wno-orphans
   build-depends:
-      base-noprelude
+      QuickCheck
+    , base-noprelude
     , containers
     , enigma
     , fmt
     , freer-simple
+    , generic-random
     , hspec
     , nonempty-containers
+    , quickcheck-classes
+    , quickcheck-instances
     , relude
     , text
     , these

@@ -1,4 +1,10 @@
-module Components.Plugboard (Plugboard, plugboard, applyPlugboard) where
+module Components.Plugboard
+  ( Plugboard,
+    plugboard,
+    applyPlugboard,
+    maxPairsInPlugboard,
+  )
+where
 
 import Characters (EnigmaChar)
 import qualified Characters

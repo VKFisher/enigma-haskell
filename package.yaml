@@ -27,6 +27,14 @@ dependencies:
   - containers
   - fmt
   - hspec
+    # for property-based tests
+  - QuickCheck
+    # for property-based tests
+  - quickcheck-instances
+    # for property-based tests on typeclass laws
+  - quickcheck-classes
+    # for property-based tests
+  - generic-random
   - nonempty-containers
   - these
 
@@ -99,5 +107,6 @@ tests:
       - -threaded
       - -rtsopts
       - -with-rtsopts=-N
+      - -Wno-orphans
     dependencies:
       - enigma

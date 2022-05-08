@@ -20,6 +20,7 @@ data Enigma = Enigma
     rotor3 :: Rotor,
     reflector :: Reflector
   }
+  deriving stock (Show, Eq)
 
 type EnigmaState = ST.State Enigma
 
