@@ -14,9 +14,9 @@ Written mainly to try out the [freer-simple](https://hackage.haskell.org/package
 
    2.1 - Rotor I (right, fast) is stepped unconditionally
 
-   2.2 - Rotor II (middle) is stepped only if Rotor I or itself is currently in a turnover position. This is called a 'double step'.
+   2.2 - Rotor II (middle) is stepped only if Rotor I or itself is currently in a turnover position.
 
-   -The double step is a solution to a mechanical limitation specific to the M3 model. If Rotor II remained in turnover position until the next time Rotor I reached a turnover position, Rotor III would also be stepped on every iteration until that point (which would reduce the total number of unique states). More information [here](http://www.intelligenia.org/downloads/rotors1.pdf).
+      - Stepping both Rotor II and Rotor III whenever Rotor II is in a turnover position is called a 'double step'. It is a solution to a mechanical limitation specific to the M3 model. If Rotor II remained in turnover position until the next time Rotor I reached a turnover position, Rotor III would also be stepped on every iteration until that point (which would reduce the total number of unique states). More information [here](http://www.intelligenia.org/downloads/rotors1.pdf).
 
    2.3 - Rotor III (left, slow) is stepped only if Rotor II is currently in a turnover position
 
@@ -41,4 +41,4 @@ Written mainly to try out the [freer-simple](https://hackage.haskell.org/package
    3.9 - Plugboard (backward)
 
 4. A lightbulb signifying the output character lights up
-   - the output character is always different for the input character
+   - the output character is always different from the input character
